@@ -1,5 +1,3 @@
-import { createInterface } from "readline";
-import { getCommands } from "./commands.js";
 import { State } from "./state.js";
 
 export function cleanInput(input: string): string[] {
