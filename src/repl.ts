@@ -8,13 +8,13 @@ export function cleanInput(input: string): string[] {
     .filter((word) => word);
 }
 
-export function startREPL(state: State) {
+export async function startREPL(state: State) {
   const rl = state.rl;
   const allCommands = state.commands;
 
   rl.prompt();
 
-  rl.on("line", (input) => {
+  rl.on("line", async (input) => {
     const words = cleanInput(input);
 
     if (words.length === 0) {
@@ -31,7 +31,11 @@ export function startREPL(state: State) {
       return;
     }
 
-    inputCommand.callback(state);
+    try {
+      await inputCommand.callback(state);
+    } catch (err) {
+      console.log((err as Error).message);
+    }
 
     rl.prompt();
   });
