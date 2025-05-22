@@ -1,5 +1,6 @@
 import { createInterface } from "readline";
 import { getCommands } from "./commands.js";
+import { State } from "./state.js";
 
 export function cleanInput(input: string): string[] {
   return input
@@ -9,12 +10,9 @@ export function cleanInput(input: string): string[] {
     .filter((word) => word);
 }
 
-export function startREPL() {
-  const rl = createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: "Pokedex > ",
-  });
+export function startREPL(state: State) {
+  const rl = state.rl;
+  const allCommands = state.commands;
 
   rl.prompt();
 
@@ -26,7 +24,6 @@ export function startREPL() {
       return;
     }
 
-    const allCommands = getCommands();
     const inputCommand = allCommands[words[0]];
 
     if (!inputCommand) {
@@ -36,7 +33,7 @@ export function startREPL() {
       return;
     }
 
-    inputCommand.callback(allCommands);
+    inputCommand.callback(state);
 
     rl.prompt();
   });
