@@ -47,7 +47,7 @@ export class PokeAPI {
   }
 
   async fetchLocation(locationName: string): Promise<Location> {
-    const locationURL = `${PokeAPI.baseURL}/location-area/${locationName}}`;
+    const locationURL = `${PokeAPI.baseURL}/location-area/${locationName}`;
 
     const cachedLocation = this.#pokeCache.get<Location>(locationURL);
     if (cachedLocation) {

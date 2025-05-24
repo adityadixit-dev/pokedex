@@ -23,6 +23,7 @@ export async function startREPL(state: State) {
     }
 
     const inputCommand = allCommands[words[0]];
+    const extraInputWords = words.slice(1);
 
     if (!inputCommand) {
       console.log("Unknown Command");
@@ -32,7 +33,7 @@ export async function startREPL(state: State) {
     }
 
     try {
-      await inputCommand.callback(state);
+      await inputCommand.callback(state, ...extraInputWords);
     } catch (err) {
       console.log((err as Error).message);
     }
